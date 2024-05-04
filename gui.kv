@@ -1,0 +1,93 @@
+BoxLayout:
+    orientation: 'horizontal'
+    spacing: 30
+    padding: (50, 75)
+
+    # encryption section
+    BoxLayout:
+        id: encryptionLayout
+        orientation: 'vertical'
+        spacing: 2.5
+        Label:
+            id: encryptionLabel 
+            text: "Encryption"
+            size_hint: (1, 0.25)
+            font_size: 25
+        TextInput:
+            id: encryptionMessage
+            hint_text: "Enter message: "
+            font_size: 20
+            multiline: True
+        TextInput:
+            id: encryptionKey
+            hint_text: "Enter 16-bytes key (so 16 characters): "
+            size_hint: (1, 0.125)
+            font_size: 20
+            multiline: True
+        Button:
+            text: "Encrypt"
+            on_press: app.encryptMsg()
+            size_hint: (0.5, 0.25)
+            pos_hint: {'x':0.25}
+            background_color: (0.1261, 0.97, 0.6887)
+
+        TextInput:
+            id: encryptedText
+            hint_text: "Encrypted message: "
+            font_size: 20
+            multiline: True
+        TextInput:
+            id: encryptionTag
+            hint_text: "Tag: "
+            size_hint: (1, 0.125)
+            font_size: 20
+            multiline: True
+        TextInput:
+            id: encryptionNonce
+            hint_text: "Nonce: "
+            size_hint: (1, 0.125)
+            font_size: 20
+            multiline: True
+
+    # decryption section
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 2.5
+        Label:
+            text: "Decryption"
+            size_hint: (1, 0.25)
+            font_size: 25
+        TextInput:
+            id: decryptionMessage
+            hint_text: "Enter encrypted message: "
+            font_size: 20
+            multiline: True
+        TextInput:
+            id: decryptionKey
+            hint_text: "Enter 16-bytes key (so 16 characters): "
+            size_hint: (1, 0.125)
+            font_size: 20
+            multiline: True
+        TextInput:
+            id: decryptionTag
+            hint_text: "Enter tag: "
+            size_hint: (1, 0.125)
+            font_size: 20
+            multiline: True
+        TextInput:
+            id: decryptionNonce
+            hint_text: "Enter nonce: "
+            size_hint: (1, 0.125)
+            font_size: 20
+            multiline: True
+        Button:
+            text: "Decrypt"
+            on_press: app.decryptMsg()
+            size_hint: (0.5, 0.25)
+            pos_hint: {'x':0.25}
+            background_color: (0.1261, 0.97, 0.6887)
+        TextInput:
+            id: decryptedText
+            hint_text: "Decrypted message: "
+            font_size: 20
+            multiline: True
