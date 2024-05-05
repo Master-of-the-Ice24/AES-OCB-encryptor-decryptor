@@ -9,32 +9,38 @@ class mainApp(App):
         Window.maximize()
         return Builder.load_file('gui.kv')
 
-    def encryptMsg(self):
-        encryptionMessage = self.root.ids.encryptionMessage
-        encryptionKey = self.root.ids.encryptionKey
-        encryptedText = self.root.ids.encryptedText
-        encryptionTag = self.root.ids.encryptionTag
-        encryptionNonce = self.root.ids.encryptionNonce
+    def on_start(self):
+        self.encryptionMessage = self.root.ids.encryptionMessage
+        self.encryptionKey = self.root.ids.encryptionKey
+        self.encryptedText = self.root.ids.encryptedText
+        self.encryptionTag = self.root.ids.encryptionTag
+        self.encryptionNonce = self.root.ids.encryptionNonce
 
-        data = encryptionMessage.text.encode()
-        aes_key = encryptionKey.text.encode()
+        self.ciphertext = self.root.ids.decryptionMessage
+        self.aes_key = self.root.ids.decryptionKey
+        self.decryptedText = self.root.ids.decryptedText
+        self.tag = self.root.ids.decryptionTag
+        self.nonce = self.root.ids.decryptionNonce
+    
+    def encryptMsg(self):
+        data = self.encryptionMessage.text.encode()
+        aes_key = self.encryptionKey.text.encode()
         
         cipher = AES.new(aes_key, AES.MODE_OCB)
         ciphertext, tag = cipher.encrypt_and_digest(data)
 
         assert len(cipher.nonce) == 15
         
-        encryptedText.text = ciphertext.hex()
-        encryptionTag.text = tag.hex()
-        encryptionNonce.text = cipher.nonce.hex()
+        self.encryptedText.text = ciphertext.hex()
+        self.encryptionTag.text = tag.hex()
+        self.encryptionNonce.text = cipher.nonce.hex()
 
     def decryptMsg(self):
-        ciphertext = self.root.ids.decryptionMessage.text
-        aes_key = self.root.ids.decryptionKey.text.encode()
-        decryptedText = self.root.ids.decryptedText
-        tag = self.root.ids.decryptionTag.text
-        nonce = self.root.ids.decryptionNonce.text
-        
+        ciphertext = self.ciphertext.text
+        aes_key = self.aes_key.text.encode()
+        tag = self.tag.text
+        nonce = self.nonce.text
+
         ciphertext = bytes.fromhex(ciphertext)
         tag = bytes.fromhex(tag)
         nonce = bytes.fromhex(nonce)
@@ -44,7 +50,7 @@ class mainApp(App):
         cipher = AES.new(aes_key, AES.MODE_OCB, nonce=nonce)
         plaintext = cipher.decrypt_and_verify(ciphertext, tag)
 
-        decryptedText.text = plaintext.decode()
+        self.decryptedText.text = plaintext.decode()
 
 
 
