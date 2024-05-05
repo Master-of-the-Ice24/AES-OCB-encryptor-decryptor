@@ -7,6 +7,7 @@ from Crypto.Cipher import AES
 class mainApp(App):
     def build(self):
         Window.maximize()
+        self.title = "AES-OCB encryptor and decryptor"
         return Builder.load_file('gui.kv')
 
     def on_start(self):
